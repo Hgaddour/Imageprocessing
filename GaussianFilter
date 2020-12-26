@@ -1,0 +1,28 @@
+from picamera.array import PiRGBArray
+from picamera import PiCamera
+import time
+import cv2
+import numpy as np
+
+# initialize the camera and grab a reference to the raw camera capture
+camera = PiCamera()
+camera.resolution = (320, 240)
+camera.framerate = 32
+rawCapture = PiRGBArray(camera, size=(320, 240))
+ 
+# allow the camera to warmup
+time.sleep(0.1)
+for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True):
+    
+    image = frame.array
+    
+    hsv=cv2.cvtColor(image,cv2.COLOR_BGR2HSV)
+    
+    blur=cv2.GaussianBlur(image,(0,0),5)    
+    cv2.imshow('frame',image)
+    cv2.imshow('blur',blur)
+    k = cv2.waitKey(1)
+    rawCapture.truncate(0)
+    if k == 27:
+        break
+        cv2.destroyAllWindows()
