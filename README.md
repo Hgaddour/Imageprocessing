@@ -1,2 +1,3 @@
 # Imageprocessing
-Different filters on raspberry
+Real time image processing on Raspberry Pi3 
+Different filters applied using openCV
